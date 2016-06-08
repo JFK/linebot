@@ -6,7 +6,6 @@ import json
 from os import environ
 
 ENDPOINT = 'https://trialbot-api.line.me'
-EVENT_TYPE = '138311608800106203'  # Fixed value
 
 CHANNEL_ID = int(environ.get('LINEBOT_CHANNEL_ID', '<CHANNEL_ID>'))
 CHANNEL_SECRET = environ.get('LINEBOT_CHANNEL_SECRET', '<CHANNEL_SECRET>')
@@ -21,8 +20,8 @@ def build_data(to, content):
     return {
         'to': to,
         'content': content,
-        'toChannel': CHANNEL_ID,
-        'eventType': EVENT_TYPE
+        'toChannel': 1383378250,
+        'eventType': '138311608800106203'
     }
 
 
