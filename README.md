@@ -3,6 +3,7 @@
 ## 必要なパッケージをインストール
 
 ```
+$ git clone https://github.com/JFK/linebot.git
 $ pip install -r requirements.txt
 ```
 
