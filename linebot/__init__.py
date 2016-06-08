@@ -25,12 +25,12 @@ def build_data(to, content):
     }
 
 
-def content_image(content_url, image_url):
+def content_image(image_url, preview_image_url):
     return {
         'contentType': 2,
         'toType': 1,
-        'originalContentUrl': content_url,
-        'previewImageUrl': image_url
+        'originalContentUrl': image_url,
+        'previewImageUrl': preview_image_url
     }
 
 
