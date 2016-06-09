@@ -44,27 +44,27 @@ class Receive:
             yield self.current()
 
     @property
-    def is_text(self, text):
+    def is_text(self):
         if self.content('contentType') == ContentType.TEXT:
             return True
 
     @property
-    def is_image(self, image_url, preview_image_url):
+    def is_image(self):
         if self.content('contentType') == ContentType.IMAGE:
             return True
 
     @property
-    def is_video(self, video_url, preview_image_url):
+    def is_video(self):
         if self.content('contentType') == ContentType.VIDEO:
             return True
 
     @property
-    def is_audio(self, audio_url, duration_millis):
+    def is_audio(self):
         if self.content('contentType') == ContentType.AUDIO:
             return True
 
     @property
-    def is_location(self, text, latitude, longitude):
+    def is_location(self):
         if self.content('contentType') == ContentType.LOCATION:
             return True
 
