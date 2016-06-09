@@ -57,6 +57,5 @@ $ export LINEBOT_CHANNEL_MID='<CHANNEL_MID>'
 ### テスト実行
 
 ```
-$ ls
 $ PYTHONPATH=`pwd` python sample.py <CHANNEL_ID> <ToのID> "<テキストメッセージ>"
 ```
