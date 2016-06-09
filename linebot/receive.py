@@ -43,34 +43,42 @@ class Receive:
             self._index = index
             yield self.current()
 
+    @property
     def is_text(self, text):
         if self.content('contentType') == ContentType.TEXT:
             return True
 
+    @property
     def is_image(self, image_url, preview_image_url):
         if self.content('contentType') == ContentType.IMAGE:
             return True
 
+    @property
     def is_video(self, video_url, preview_image_url):
         if self.content('contentType') == ContentType.VIDEO:
             return True
 
+    @property
     def is_audio(self, audio_url, duration_millis):
         if self.content('contentType') == ContentType.AUDIO:
             return True
 
+    @property
     def is_location(self, text, latitude, longitude):
         if self.content('contentType') == ContentType.LOCATION:
             return True
 
+    @property
     def is_sticker(self):
         if self.content('contentType') == ContentType.STICKER:
             return True
 
+    @property
     def is_rich_message(self):
         if self.content('contentType') == ContentType.RICH_MESSAGE:
             return True
 
+    @property
     def content(self, index):
         return self.current()['content'][index]
 
