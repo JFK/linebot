@@ -19,7 +19,7 @@ from const import EventType
 from const import ContentType
 
 
-class Receive:
+class Receive():
     def __init__(self, data):
         self._index = 0
         self._data = json.loads(data)['result']
@@ -42,6 +42,9 @@ class Receive:
         for index, value in enumerate(self._data):
             self._index = index
             yield self.current()
+
+    def content(self, index):
+        return self.current()['content'][index]
 
     @property
     def is_text(self):
@@ -77,10 +80,6 @@ class Receive:
     def is_rich_message(self):
         if self.content('contentType') == ContentType.RICH_MESSAGE:
             return True
-
-    @property
-    def content(self, index):
-        return self.current()['content'][index]
 
     @property
     def is_message(self):

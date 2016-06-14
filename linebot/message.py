@@ -15,13 +15,15 @@
 # under the License.
 
 
+import json
 from const import ContentType
 from const import RecipientType
+USER = RecipientType.USER
 
 
-class MessageBuilder:
+class MessageBuilder():
     @classmethod
-    def text(self, text, to_type=RecipientType.USER):
+    def text(self, text, to_type=USER):
         return {
             'contentType': ContentType.TEXT,
             'toType': to_type,
@@ -29,7 +31,7 @@ class MessageBuilder:
         }
 
     @classmethod
-    def image(self, image_url, preview_image_url, to_type=RecipientType.USER):
+    def image(self, image_url, preview_image_url, to_type=USER):
         return {
             'contentType': ContentType.IMAGE,
             'toType': to_type,
@@ -38,7 +40,7 @@ class MessageBuilder:
         }
 
     @classmethod
-    def video(self, video_url, preview_image_url, to_type=RecipientType.USER):
+    def video(self, video_url, preview_image_url, to_type=USER):
         return {
             'contentType': ContentType.VIDEO,
             'toType': to_type,
@@ -47,7 +49,7 @@ class MessageBuilder:
         }
 
     @classmethod
-    def audio(self, audio_url, duration_millis, to_type=RecipientType.USER):
+    def audio(self, audio_url, duration_millis, to_type=USER):
         return {
             'contentType': ContentType.AUDIO,
             'toType': to_type,
@@ -58,7 +60,7 @@ class MessageBuilder:
         }
 
     @classmethod
-    def location(self, text, latitude, longitude, to_type=RecipientType.USER):
+    def location(self, text, latitude, longitude, to_type=USER):
         return {
             'contentType': ContentType.LOCATION,
             'toType': to_type,
@@ -72,7 +74,7 @@ class MessageBuilder:
 
     @classmethod
     def sticker(self, stkid, stkpkgid, stkver=None,
-                to_type=RecipientType.USER):
+                to_type=USER):
         meta = {
             'STKID': '%s' % stkid,
             'STKPKGID': '%s' % stkpkgid
@@ -88,7 +90,7 @@ class MessageBuilder:
 
     @classmethod
     def rich_message(self, image_url, alt_text, markup,
-                     to_type=RecipientType.USER):
+                     to_type=USER):
         return {
             'contentType': ContentType.RICH_MESSAGE,
             'toType': to_type,
@@ -101,8 +103,90 @@ class MessageBuilder:
         }
 
 
-class MultipleMessageBuilder:
-    def __init__(self, to_type=RecipientType.USER):
+class RichMessageBuilder():
+    def __init__(self):
+        self.actions = {}
+        self.listeners = []
+
+    def add_message(self, **attrs):
+        self.set_action(attrs['action_name'], attrs['text'],
+                        attrs['link_url'])
+        self.add_listener(attrs['action_name'], attrs['x'], attrs['y'],
+                          attrs['width'], attrs['height'])
+
+    def add_listener(self, action_name, x, y, width, height):
+        if not (isinstance(action_name, str) and
+                isinstance(x, int) and
+                isinstance(y, int) and
+                isinstance(width, int) and
+                isinstance(height, int)):
+            raise ValueError('Invalid value type.')
+
+        if action_name not in self.actions:
+            raise ValueError('action_name is not found in self.actions.')
+
+        self.listeners.append({
+            'type': 'touch',  # Fixed value
+            'params': [x, y, width, height],
+            'action': action_name
+        })
+
+    def set_action(self, action_name, text, link_url, action_type='web'):
+        self.actions.update({
+            action_name: {
+                'type': action_type,
+                'text': str(text),
+                'params': {'linkUri': str(link_url)}
+            }
+        })
+
+    def calc_height(self):
+        height = 0
+        for x in self.listeners:
+            h = x['params'][1] + x['params'][3]  # y + height
+            if height < h:
+                height = h
+        return 2080 if height > 2080 else height
+
+    def build(self):
+        width = 1040  # Fixed value
+        height = self.calc_height()
+        scene_name = 'scene1'  # Fixed value
+        image_name = 'image1'  # Fixed value
+        x = 0  # Fixed value
+        y = 0  # Fixed value
+        return json.dumps({
+            'canvas': {
+                'width': width,
+                'height': height,
+                'initialScene': scene_name
+            },
+            'images': {
+                image_name: {
+                    'x': x,
+                    'y': y,
+                    'w': width,
+                    'h': height
+                }
+            },
+            'actions': self.actions,
+            'scenes': {
+                scene_name: {
+                    'draws': [{
+                        'image': image_name,
+                        'x': x,
+                        'y': y,
+                        'w': width,
+                        'h': height
+                    }],
+                    'listeners': self.listeners,
+                }
+            }
+        })
+
+
+class MultipleMessageBuilder():
+    def __init__(self, to_type=USER):
         self.messages = []
         self.to_type = to_type
 

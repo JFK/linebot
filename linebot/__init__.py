@@ -120,6 +120,10 @@ class LINEBot:
         else:
             raise LineBotException('multiple_message_builder.messages is empty.')
 
+    def message_content(self, mid):
+        url = '%s%s/message/%s/content' % (BotAPI.SERVER, BotAPI.ENDPOINT_BOT, mid)
+        return requests.get(url, headers=self.headers)
+
     def send_event(self, to, message, multi=False):
         data = self.prepare_payload(to, message, multi)
         url = '%s%s' % (BotAPI.SERVER, BotAPI.ENDPOINT_EVENT)

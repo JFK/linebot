@@ -20,6 +20,7 @@ from os import environ
 class BotAPI:
     SERVER = 'https://trialbot-api.line.me'
     ENDPOINT_EVENT = '/v1/events'
+    ENDPOINT_BOT = '/v1/bot'
 
 
 class Credential:
