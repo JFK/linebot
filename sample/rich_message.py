@@ -16,7 +16,7 @@
 # under the License.
 
 
-from linebot import LINEBot
+from linebot.engine import LINEBot
 from linebot.message import RichMessageBuilder
 import sys
 

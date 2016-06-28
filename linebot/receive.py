@@ -17,9 +17,10 @@
 import json
 from const import EventType
 from const import ContentType
+from const import OperationType
 
 
-class Receive():
+class Receive(object):
     def __init__(self, data):
         self._index = 0
         self._data = json.loads(data)['result']
@@ -89,4 +90,16 @@ class Receive():
     @property
     def is_operation(self):
         if self.current()['eventType'] == EventType.RECEIVING_OPERATION:
+            return True
+
+    @property
+    def is_added_as_friend(self):
+        if self.is_operation and \
+                self.current()['opType'] == OperationType.ADDED_AS_FRIEND:
+            return True
+
+    @property
+    def is_blocked(self):
+        if self.is_operation and \
+                self.current()['opType'] == OperationType.BLOCKED:
             return True

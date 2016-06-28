@@ -21,7 +21,7 @@ from const import RecipientType
 USER = RecipientType.USER
 
 
-class MessageBuilder():
+class MessageBuilder(object):
     @classmethod
     def text(self, text, to_type=USER):
         return {
@@ -103,7 +103,7 @@ class MessageBuilder():
         }
 
 
-class RichMessageBuilder():
+class RichMessageBuilder(object):
     def __init__(self):
         self.actions = {}
         self.listeners = []
@@ -185,7 +185,7 @@ class RichMessageBuilder():
         })
 
 
-class MultipleMessageBuilder():
+class MultipleMessageBuilder(object):
     def __init__(self, to_type=USER):
         self.messages = []
         self.to_type = to_type

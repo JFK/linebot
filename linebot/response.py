@@ -15,7 +15,7 @@
 # under the License.
 
 
-class Response():
+class Response(object):
     def __init__(self, data):
         self._data = data
         self._is_succeeded = True if isinstance(self.data, dict) and \

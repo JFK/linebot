@@ -16,7 +16,7 @@
 # under the License.
 
 
-from linebot import LINEBot
+from linebot.engine import LINEBot
 import sys
 
 if __name__ == '__main__':
