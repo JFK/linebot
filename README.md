@@ -25,17 +25,19 @@ bot.CHANNEL_MID = "<CHANNEL_MID>"
 # callbackで受け取った、jsonのデータからreceiveインスタンスを生成する
 receive = bot.receive_callback(json_data)
 
-# オペレーションの場合
-if receive.is_operation:
-    """ 処理を行う """
-    """ 登録、削除など """
+# 友達登録、ブロック解除された時
+if receive.is_added_as_friend:
+    ...
+
+# 友達ブロックされた時
+elif receive.is_blocked:
+    ...
 
 # メッセージを受信した場合
-elif receive.is_message:
-    if receive.content('contentType') == ContentType.TEXT:
-        to = receive.content('from')
-        msg = receive.content('text')
-        bot.send_text([to], 'Thanks for your message "%s".' % msg)
+elif receive.is_message and receive.is_text:
+    to = receive.content('from')
+    msg = receive.content('text')
+    bot.send_text([to], 'Thanks for your message "%s".' % msg)
 
 
 # 画像を送る場合
