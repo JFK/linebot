@@ -10,7 +10,7 @@ $ pip install -r requirements.txt
 ## importして使う場合
 
 ```
-from linebot import LINEBot
+from linebot.engine import LINEBot
 from linebot.const import ContentType
 
 # 認証の準備
