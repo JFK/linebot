@@ -95,11 +95,11 @@ class Receive(object):
     @property
     def is_added_as_friend(self):
         if self.is_operation and \
-                self.current()['opType'] == OperationType.ADDED_AS_FRIEND:
+                self.content('opType') == OperationType.ADDED_AS_FRIEND:
             return True
 
     @property
     def is_blocked(self):
         if self.is_operation and \
-                self.current()['opType'] == OperationType.BLOCKED:
+                self.content('opType') == OperationType.BLOCKED:
             return True
