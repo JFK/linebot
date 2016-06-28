@@ -38,13 +38,13 @@ class LINEBot(object):
         self.multiple_message_builder = MultipleMessageBuilder(to_type=to_type)
         self.to_type = RecipientType.USER
         channel = self.CHANNEL_SECRET or Credential.CHANNEL_SECRET
-        channle_mid = self.CHANNEL_MID or Credential.CHANNEL_MID
+        channel_mid = self.CHANNEL_MID or Credential.CHANNEL_MID
         self.headers = {
             'Accept-Language': 'ja-JP,en-US;q=0.7,en-GB;q=0.3',
             'Content-Type': 'application/json; charser=UTF-8',
             'X-Line-ChannelID': int(to_channel),
             'X-Line-ChannelSecret': channel,
-            'X-Line-Trusted-User-With-ACL': channle_mid
+            'X-Line-Trusted-User-With-ACL': channel_mid
         }
 
     def prepare_payload(self, to, content, multi):
